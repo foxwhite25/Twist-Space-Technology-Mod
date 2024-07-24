@@ -228,7 +228,10 @@ public class StellarForgeRecipePool implements IRecipePool {
     public FluidStack getMoltenFluids(ItemStack ingot, int ingotAmount) {
         FluidStack out = null;
         for (GT_Recipe recipeMolten : RecipeMaps.fluidExtractionRecipes.getAllRecipes()) {
-            if (metaItemEqual(ingot, recipeMolten.mInputs[0])) {
+            if (recipeMolten.mFluidOutputs.length == 0 || recipeMolten.mInputs.length == 0) {
+                continue;
+            }
+            if (!metaItemEqual(ingot, recipeMolten.mInputs[0])) {
                 if (recipeMolten.mFluidOutputs[0] != null) {
                     out = recipeMolten.mFluidOutputs[0].copy();
                     out.amount = 144 * ingotAmount;
